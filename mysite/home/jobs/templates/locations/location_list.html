@@ -1,0 +1,28 @@
+{% extends "base_menu.html" %}
+{% block content %}
+<h1>Locations</h1>
+<p>
+{% if location_list %}
+<ul>
+  {% for location in location_list %}
+    <li>
+        {{ job.location }}
+        {% if location.owner == user %}
+        (<a href="{% url 'jobs:location_update' location.id %}">Edit</a> |
+        <a href="{% url 'jobs:location_delete' location.id %}">Delete</a>)
+        {% endif %}
+    </li>
+  {% endfor %}
+</ul>
+{% else %}
+  <p>There are no locations in the database.</p>
+{% endif %}
+</p>
+<p>
+{% if user.is_authenticated %}
+<a href="{% url 'logout' %}?next={% url 'jobs:all' %}">Logout</a>
+{% else %}
+<a href="{% url 'login' %}?next={% url 'jobs:all' %}">Login</a>
+{% endif %}
+</p>
+{% endblock %}

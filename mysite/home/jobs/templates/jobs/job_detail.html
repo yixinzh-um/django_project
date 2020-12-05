@@ -1,0 +1,76 @@
+{% extends "base_menu.html" %}
+{% load humanize %} <!-- https://docs.djangoproject.com/en/3.0/ref/contrib/humanize -->
+
+{% block head %}
+<link rel="stylesheet" href="{% url 'jobs:static' 'bootstrap.css' %}">
+<style>
+
+.overlay{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  display: none;
+  background-color: rgba(0,0,0,0.5); /*dim the background*/
+}
+
+</style>
+{% endblock %}
+{% block content %}
+<span style="float: right;">
+({{ job.updated_at|naturaltime }})
+{% if job.owner == user %}
+<a href="{% url 'jobs:job_update' job.id %}"><i class="fa fa-pencil"></i></a>
+<a href="{% url 'jobs:job_delete' job.id %}"><i class="fa fa-trash"></i></a>
+{% endif %}
+</span>
+<h2>{{ job.title }}</h21>
+<br>
+<h4>Location: {{ job.location }}</h4>
+<h4>Salary: ${{ job.salary_l }}k-{{ job.salary_h }}k</h4>
+<h4 >Description</h4>
+<div id='description' class='container'>
+  <div class="row">
+      <div class='col-lg-12' >
+        <p>{{job.description|safe}}</p>
+      </div>
+  </div>
+</div>
+
+{% if job.content_type %}
+<img style="float:right; max-width:50%;" src="{% url 'jobs:job_picture' job.id %}"
+    onclick="document.getElementById('overlay').style.display = 'block';">
+{% endif %}
+<p>
+{{ job.text }}
+
+{% if user %}
+<br clear="all"/>
+<p>
+{% load crispy_forms_tags %}
+<form method="post" action="{% url 'jobs:job_comment_create' job.id %}">
+    {% csrf_token %}
+    {{ comment_form|crispy }}
+<input type="submit" value="Submit">
+<input type="submit" value="All Jobs" onclick="window.location.href='{% url 'jobs:all' %}';return false;">
+</form>
+</p>
+{% endif %}
+
+
+{% for comment in comments %}
+<p id='comment'> {{ comment.text }}
+({{ comment.updated_at|naturaltime }})
+{% if user == comment.owner %}
+<a href="{% url 'jobs:job_comment_delete' comment.id %}"><i class="fa fa-trash"></i></a>
+{% endif %}
+</p>
+{% endfor %}
+</p>
+
+<p>
+<a href="{% url 'jobs:all' %}">All jobs</a>
+</p>
+{% endblock %}

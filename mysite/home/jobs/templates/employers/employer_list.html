@@ -1,0 +1,23 @@
+{% extends "base_menu.html" %}
+
+{% block content %}
+  <h1>Employer List</h1>
+  {% if employer_list %}
+  <ul>
+    {% for employer in employer_list %}
+      <li>
+          {{ employer.name }}
+         (<a href="{% url 'jobs:employer_update' employer.id %}">Update</a> |
+          <a href="{% url 'jobs:employer_delete' employer.id %}">Delete</a>)
+      </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+    <p>There are no employers in the library.</p>
+  {% endif %}
+  <p><a href="{% url 'jobs:employer_create' %}">Add a employer</a></p>
+
+  <p>
+    <a href="{% url 'jobs:all' %}">Back to jobs</a>
+  </p>
+{% endblock %}

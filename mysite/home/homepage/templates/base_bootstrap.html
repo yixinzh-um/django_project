@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+<!-- Edit dj4e-samples/settings.py and add APP_NAME = 'DJ4E Samples' or similar -->
+<title>{% block title %}{{ settings.APP_NAME }}{% endblock %}</title>
+
+<!-- Replace this value (42-42) with the one provided by the autograder -->
+<meta name="dj4e" content="14eac0d254a6ccaf9b67584c7830a5c0">
+
+<meta name="dj4e-code" content="42160445516394">
+
+<link rel="stylesheet"
+    href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"
+    crossorigin="anonymous">
+
+<link rel="stylesheet"
+    href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap-theme.min.css"
+    crossorigin="anonymous">
+
+<link rel="stylesheet"
+    href="https://code.jquery.com/ui/1.12.1/themes/ui-lightness/jquery-ui.css"
+     crossorigin="anonymous">
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"
+    crossorigin="anonymous"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"
+    crossorigin="anonymous"></script>
+
+<script
+  src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"
+  crossorigin="anonymous"></script>
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/v4-shims.css">
+
+
+<!-- <link rel="stylesheet" href="css/bootstrap.css"> -->
+
+<style>
+/* body{
+    font-family:'Lucida Grande', sans-serif;
+    color: #FFFFFF;
+    background: #000000;
+} */
+h1{
+    font-size: 64px;
+    text-align: center;
+}
+
+h2{
+    font-size: 56px;
+    text-align: center;
+}
+header{
+  background-color:#d8d8d8;
+  background-image: url("{% url 'jobs:static' 'job.png' %}");
+  background-size:100%;
+  text-align:center;
+  padding: 2%;
+
+}
+
+</style>
+
+
+
+<meta name="dj4e-version" content="2020-10-23">
+
+{% block head %} {% endblock %}
+
+</head>
+<body>
+<div class="container">
+{% block navbar %} {% endblock %}
+{% block welcome %} {% endblock %}
+{% block messages %}
+    {% if messages %}
+    {% for msg in messages %}
+        <div class="alert alert-{{msg.level_tag}}" role="alert">
+        {{msg.message}}
+        </div>
+    {% endfor %}
+    {% endif %}
+{% endblock %}
+{% block content %}
+{% endblock %}
+</div>
+{% block footer %} {% endblock %}
+</body>
+</html>

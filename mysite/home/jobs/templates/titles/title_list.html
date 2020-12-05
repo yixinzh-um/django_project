@@ -1,0 +1,28 @@
+{% extends "base_menu.html" %}
+{% block content %}
+<h1>Titles</h1>
+<p>
+{% if title_list %}
+<ul>
+  {% for title in title_list %}
+    <li>
+        {{ job.title }}
+        {% if title.owner == user %}
+        (<a href="{% url 'jobs:title_update' title.id %}">Edit</a> |
+        <a href="{% url 'jobs:title_delete' title.id %}">Delete</a>)
+        {% endif %}
+    </li>
+  {% endfor %}
+</ul>
+{% else %}
+  <p>There are no titles in the database.</p>
+{% endif %}
+</p>
+<p>
+{% if user.is_authenticated %}
+<a href="{% url 'logout' %}?next={% url 'jobs:all' %}">Logout</a>
+{% else %}
+<a href="{% url 'login' %}?next={% url 'jobs:all' %}">Login</a>
+{% endif %}
+</p>
+{% endblock %}
